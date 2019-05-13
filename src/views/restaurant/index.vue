@@ -8,7 +8,7 @@
 
         <elSection-view style="margin: 0 250px;font-size: 10px;overflow-y: scroll"></elSection-view>
         <elFooter-view style="margin: 0 250px;font-size: 10px;overflow-y: scroll"></elFooter-view>
-
+<div style="width:100%;height:50px;background-color:white"></div>
     </div>
 </template>
 

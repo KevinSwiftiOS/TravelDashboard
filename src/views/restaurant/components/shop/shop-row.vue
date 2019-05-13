@@ -18,21 +18,21 @@
         </div>
 </div>
     </el-col>
-    <el-col :lg = "4" v-if = "item.shop_service != '暂无评分'">
+    <el-col :lg = "4" v-if = "item.shop_service != 0">
 
         <span class="tag">服务</span>
         <br>
         <span class="tag-score">  {{item.shop_service}}</span>
 
     </el-col>
-    <el-col :lg = "4" v-if = "item.shop_service != '暂无评分'">
+    <el-col :lg = "4" v-if = "item.shop_env != 0">
 
         <span class="tag">环境</span>
         <br>
         <span class="tag-score"> {{item.shop_env}}</span>
 
     </el-col>
-    <el-col :lg = "4"  v-if = "item.shop_service != '暂无评分'">
+    <el-col :lg = "4"  v-if = "item.shop_taste != 0">
 
         <span class="tag">口味</span>
         <br>

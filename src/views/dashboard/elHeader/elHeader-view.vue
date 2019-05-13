@@ -203,21 +203,23 @@ export default {
       console.log("正在执行showText()函数");
       console.log((val));
       var newstr = "";
+      var t = val.toString();
       if(val == 0){
-        newstr = t.toString();
+        
+        newstr = t;
         return newstr;
       }
-      var t = val.toString();
+      
       var str = t.substr(0,1);
       var value = "",
           textColor = "";
       if (str == "+") {
         value = "+";
-        textColor = "red";
+        textColor = "chartreuse";
       }
       if (str == "-") {
         value = "-";
-        textColor = "chartreuse";
+        textColor = "red";
       }
       var temp = t.split(/\s/);
       newstr = t.replace(
