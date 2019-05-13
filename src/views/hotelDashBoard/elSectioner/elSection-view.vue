@@ -83,8 +83,8 @@
             background
             @current-change="handleCurrentChange"
             :current-page.sync="page.currPage"
-            :page-size="page.pageSize"
-            layout="prev, pager, next"
+            :page-size="5"
+            layout="total, prev, pager, next"
             :total="page.total"
           ></el-pagination>
         </div>
