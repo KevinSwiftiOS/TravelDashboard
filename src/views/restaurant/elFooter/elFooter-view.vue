@@ -34,6 +34,7 @@
 
     <div class="block">
       <el-pagination
+      style="margin-top:5px; margin-left:5px;"
         class="comment"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"

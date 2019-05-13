@@ -6,6 +6,7 @@
 
         <elSection-view style="margin: 0 250px;font-size: 10px"></elSection-view>
         <elFooter-view style="margin: 0 250px;font-size: 10px"></elFooter-view>
+        <div style="width:100%; height:50px"></div>
 
     </div>
 </template>
