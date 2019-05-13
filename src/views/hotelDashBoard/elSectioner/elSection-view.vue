@@ -199,6 +199,7 @@ export default {
       getHotelSend({
         businessArea: params
       }).then(res => {
+        console.log(res.data.hotelShopList);
         res.data.hotelShopList.forEach(item => {
           this.trendList.push(item._id + "(" + item.countNum + ")");
         });
