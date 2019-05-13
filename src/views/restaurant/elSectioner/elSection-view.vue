@@ -157,7 +157,7 @@ export default {
       businessCirle: site_list,
       cuisineList: [],
       selectCuisine: "",
-      selectBusines: "全部(1056)",
+      selectBusines: "全部(1090)",
       commentType: 1,
       sortWay: -1,
       shopList: [],
