@@ -105,7 +105,7 @@ export const optionData = {
         },
         {
             type: 'value',
-            min: -60,
+            min: -90,
             max: 60,
             opposite: true,
             position: 'right',

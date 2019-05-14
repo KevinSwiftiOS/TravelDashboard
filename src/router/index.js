@@ -92,7 +92,7 @@ export const constantRoutes = [{
             },
              {
                  path: '/hotel',
-                 component: () => import('@/views/hotelDashBoard/index'),
+                 component: () => import('@/views/hotel/index'),
                  name: 'Hotel',
                  meta: {
                      title: '餐酒店详情',
