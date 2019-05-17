@@ -123,7 +123,7 @@ export default {
         //本年评分数量是否上升 0 表示下降 1表示上升
         isYearNumRise: 0
       },
-      // //图表id
+      //图表id
       HotelNumId: IdData.HotelNumId,
       HotelScoreId: IdData.HotelScoreId,
       hotelDetailsId: "hotelHotChangeChart",

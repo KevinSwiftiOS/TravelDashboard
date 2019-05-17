@@ -18,7 +18,7 @@
         </el-col>
         <el-col :lg="14" :xl="14" class="elTitle threeTip">景区 排行榜</el-col>
         <el-col :lg="8" :xl="8" class="elFontSize">
-          <a :href="scenicSpotDetailUrl" target="_blank">查看详情</a>
+          <a href="#/spots">查看详情</a>
         </el-col>
       </el-row>
       <!--内容-->

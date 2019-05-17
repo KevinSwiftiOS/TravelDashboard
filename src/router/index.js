@@ -102,6 +102,18 @@ export const constantRoutes = [{
                  }
                  // hidden: true
              },
+             {
+                 path: '/spots',
+                 component: () => import('@/views/spots/index'),
+                 name: 'Spots',
+                 meta: {
+                     title: '景区详情',
+                     icon: 'spots',
+                     noCache: true,
+                     affix: true
+                 }
+                 // hidden: true
+             },
             // {
             //     path: '/hoteldashboard',
             //     name: 'HotelDashBoard',

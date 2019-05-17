@@ -15,6 +15,10 @@
                 <router-link to="/hotel">
                     <i class="el-icon-news">酒店详情</i>
                 </router-link>
+                                <router-link to="/spots">
+                    <i class="el-icon-news">景区详情</i>
+                </router-link>
+                
                 <!--
                 <router-link to="/shop_compare">
                   <i class="el-icon-news"></i>

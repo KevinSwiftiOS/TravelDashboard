@@ -81,7 +81,7 @@ export function getHotelRankList() {
 // 4.6.1 获取不同方面评论数目（例如： 性价比： 250，位置： 300，  服务： 300）
 export function getHotelLabelList() {
     return request({
-        url: '/api/qdhhotelcomtagsum',
+        url: '/api/hotelpage/comtagsum',
         method: 'post',
     })
 }
@@ -95,7 +95,7 @@ export function getHotelLabelList() {
  */
 export function getHotelComment(param) {
     return request({
-        url: '/api/qdhhotelcomfeatureword',
+        url: '/api/hotelpage/comfeatureword',
         method: 'post',
         data: param
     })
