@@ -95,6 +95,18 @@ export const constantRoutes = [{
                 name: 'HotelDashBoard',
                 component: () => import('@/views/hotelDashBoard/index')
             },
+            {
+                path: '/spider',
+                name: 'spiderDashboard',
+                component: () => import('@/views/spider/index'),
+                children: [
+                    {
+                        path: "detail", //爬虫详情页面
+                        name: "SpiderDetail",
+                        component: () => import('@/views/spider/spiderDetail/index')
+                    }
+                ]
+            },
         ]
     },
 
