@@ -52,9 +52,9 @@ export function getSpotBarchartsNumber(params) {
 /**
  * 4.4 不同景区折线图饼图对比
  */
-export function getSpotComparedLineChart(params) {
+export function getSpotComparedGraphChart(params) {
     return request({
-        url: '/api/spotspage/comparedpiechart',
+        url: '/api/spotspage/comparedgraphchart',
         method: 'post',
         data:params
     })

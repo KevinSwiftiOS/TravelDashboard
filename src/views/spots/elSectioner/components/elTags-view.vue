@@ -29,7 +29,6 @@
 import Bus from "../../bus.js";
 import { timeSelect } from "../../base/timeSelect";
 import { spotsList } from "../../base/spotInf.js";
-
 export default {
   name: "elTagsView",
   props: {
@@ -89,7 +88,7 @@ export default {
         }
       }
       //向父组件传递新增景区和当前选择的所有景区
-      this.sendForFather();
+      this.sendTagsArray();
     },
 
     // 标签移除
@@ -104,16 +103,17 @@ export default {
       eTag["type"] = "success";
       this.tags.push(eTag);
       this.newAddTag = eTag.value;
-      this.sendForFather();
+      this.sendTagsArray();
     },
 
     //向父组件传递新增景区和当前选择的所有景区
-    sendForFather(){
+    sendTagsArray(){
       var newTagArray = {
         tags:this.tags,
         newAddTag:this.newAddTag
       }
-      this.$emit("newAddTagM", newTagArray);
+      // this.$emit("newAddTagM", newTagArray);
+      Bus.$emit("Tags", newTagArray)
     }
     
   }

@@ -7,21 +7,16 @@
       >
       <span class="chartTitle">景区同时段评论数对比</span>
     </div>
-    <el-row :gutter="24" class="chartBoard">
-      <el-time-select-view v-on:timeParamsM="timeParamsM"></el-time-select-view>
+    <el-card :gutter="24" class="chartBoard">
+      <el-time-select-view id="score"></el-time-select-view>
       <el-row :gutter="24">
         <el-col :lg="18">
-          <el-card class="box-card">
-            <div v-for="o in 4" :key="o" class="text item">{{'列表内容 ' + o }}</div>
-          </el-card>
+            <pie-charts></pie-charts>
         </el-col>
-        <el-tags-view :currSpot="currSpot" v-on:newAddTagM="newAddTagM"></el-tags-view>
+        <el-tags-view :currSpot="currSpot"></el-tags-view>
+        <!-- <el-col :lg="6"></el-col> -->
       </el-row>
-
-      <div>
-        <!-- <pie-charts :spotsScoreData="spotComparedData"></pie-charts> -->
-      </div>
-    </el-row>
+    </el-card>
     <div style="margin-bottom: 10px; margin-top:100px;">
       <img
         src="../../../assets/DetailsImgs/listIcon.png"
@@ -41,6 +36,7 @@ import PieCharts from "../components/pieCharts/pieCharts";
 import elTimeSelectView from "./components/elTimeSelect-view";
 import elTagsView from "./components/elTags-view"
 import Bus from "../bus.js";
+// import { getSpotComparedGraphChart } from "@/api/spots"
 
 export default {
   name: "elSectionView",
@@ -57,12 +53,10 @@ export default {
   },
   data() {
     return {
-      // 时间参数
-      comparedParams: {},
-      // 当前新增景区和所有选中景区
-      newTagArray:{},
       // 当前景区
       currSpot: "",
+      isScore:"score",
+      isNum:"num"
     };
   },
   mounted() {
@@ -75,21 +69,7 @@ export default {
     });
   },
   methods: {
-    // 接受时间组件传递的时间参数
-    timeParamsM(timeParams){
-      this.comparedParams = timeParams;
-      console.log("this.comparedParams")
-      console.log(this.comparedParams)
-    },
-    // 接受新增标签组件传递的参数
-    newAddTagM(newTag){
-      // 数据格式['景区名称', 123,123,123,123...]
-      this.newTagArray = newTag
-      console.log(this.newTagArray)
-    },
 
-    //请求接口一：所有数据的更新
-    // 请求接口二：新增景区的额外更新
   }
 };
 </script>
@@ -105,6 +85,9 @@ export default {
   background: rgba(255, 255, 255, 1);
   border: 1px solid rgba(236, 237, 240, 1);
   padding: 5px;
+}
+.el-card__body{
+  padding: 0px;
 }
 // .sl-list {
 //   margin-top: 20px;

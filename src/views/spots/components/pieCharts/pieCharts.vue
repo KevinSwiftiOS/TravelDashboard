@@ -9,6 +9,7 @@
 import echarts from "echarts";
 import { debounce } from "@/utils";
 import { optionData } from "./util";
+import Bus from "../../bus.js";
 
 export default {
   props: {
@@ -27,54 +28,17 @@ export default {
     height: {
       type: String,
       default: "23vh"
-    },
-    spotComparedData: {
-      type: Array,
-      default: () => []
     }
   },
   data() {
     return {
       option: optionData,
       chart: null,
-      xh_Height: 0
+      xh_Height: 0,
+      dataset: []
     };
   },
   watch: {
-    spotComparedData: {
-      handler: function(newVal) {
-        console.log(newVal);
-        let data = newVal.map((item, index) => {
-            console.log(item)
-            return item;
-        })
-        this.option.dataset.source = data;
-        // this.initChart();
-        // setTimeout(function() {
-        //   this.chart = echarts.init(document.getElementById(this.id));
-        //   this.chart.on("updateAxisPointer", function(event) {
-        //     var xAxisInfo = event.axesInfo[0];
-        //     if (xAxisInfo) {
-        //       var dimension = xAxisInfo.value + 1;
-        //       this.chart.setOption({
-        //         series: {
-        //           id: "pie",
-        //           label: {
-        //             formatter: "{b}: {@[" + dimension + "]} ({d}%)"
-        //           },
-        //           encode: {
-        //             value: dimension,
-        //             tooltip: dimension
-        //           }
-        //         }
-        //       });
-        //     }
-        //   });
-        //   this.chart.setOption(this.option, true)
-        // });
-      },
-      deep: true
-    },
     height: {
       handler: function(newVal) {
         let self = this;
@@ -87,8 +51,34 @@ export default {
     }
   },
   mounted() {
-    this.initChart();
-    // this.setTimeout();
+    var sel = this;
+    Bus.$on("Dataset", dataset => {
+      console.log(dataset);
+      this.option.dataset.source = dataset;
+      this.option.series = [];
+      for (var i = 1; i < dataset.length; i++) {
+        this.option.series.push({
+          type: "line",
+          smooth: true,
+          seriesLayoutBy: "row"
+        });
+      }
+
+      this.option.series.push({
+        type: "pie",
+        id: "pie",
+        radius: "45%",
+        center: ["85%", "50%"],
+        label: {
+          formatter: ["{b}","({d}%)"].join('\n')
+        },
+        encode: {
+          itemName: "time",
+          x: "time"
+        }
+      });
+      this.initChart();
+    });
     this.resize();
   },
   beforeDestroy() {
@@ -101,14 +91,30 @@ export default {
   },
 
   methods: {
-    // setTimeout() {
-
-    //   this.chart.setOption(this.option, true);
-    // },
     initChart() {
-        console.log()
       this.chart = echarts.init(document.getElementById(this.id));
-      this.chart.setOption(this.option, true);
+      this.chart.on("updateAxisPointer", event => {
+        var xAxisInfo = event.axesInfo[0];
+        if (xAxisInfo) {
+          var dimension = xAxisInfo.value + 1;
+          this.chart.setOption({
+            series: [
+              {
+                type: "pie",
+                id: "pie",
+                label: {
+                  formatter: ["{b}","{@[" + dimension + "]}","({d}%)"].join('\n')
+                },
+                encode: {
+                  value: dimension,
+                  tooltip: dimension
+                }
+              }
+            ]
+          });
+        }
+      });
+      this.chart.setOption(this.option);
     },
     resize() {
       this.__resizeHandler = debounce(() => {

@@ -1,13 +1,14 @@
 <template>
-  <el-row :gutter="24">
+  <el-row :gutter="24" style="padding:0px">
     <el-col :lg="3" class="item">
-      <el-select v-model="value" @change="changeTimeRange" placeholder="请选择">
+      <el-select v-model="value" @change="changeTimeRange" placeholder="请选择" style="margin-left:25px;" size="mini">
         <el-option v-for="item in timeSelect" :key="item.value" :label="item" :value="item"></el-option>
       </el-select>
     </el-col>
     <el-col :lg="14" class="item">
       <el-date-picker
         style="width:25%"
+        size="mini"
         v-model="timeList.startDay"
         :type="dateSelector.timeType"
         :placeholder="dateSelector.timePlaceholder"
@@ -16,6 +17,7 @@
         :picker-options="dateOption"
       ></el-date-picker>
       <el-select
+      size="mini"
         v-model="timeList.quarter1"
         placeholder="请选择"
         v-if="value === '按季度'"
@@ -29,6 +31,7 @@
         ></el-option>
       </el-select>
       <el-date-picker
+      size="mini"
         style="width:25%"
         v-model="timeList.endDay"
         :type="dateSelector.timeType"
@@ -39,6 +42,7 @@
         @change="detectTime"
       ></el-date-picker>
       <el-select
+      size="mini"
         v-model="timeList.quarter2"
         placeholder="请选择"
         v-if="value === '按季度'"
@@ -59,12 +63,13 @@
         v-for="item in itemList"
         :key="item.value"
         @change="setDataParams"
-        style="margin-top:30px"
+        style="margin-top:25px"
       >
         <el-radio :label="item.label" style="margin-left:20px">{{item.value}}</el-radio>
       </el-radio-group>
     </el-col>
     <el-button
+    size="mini"
       icon="el-icon-search"
       type="warning"
       circle
@@ -77,7 +82,8 @@
 <script>
 import { timeSelect } from "../../base/timeSelect.js";
 import { funcs } from "../../base/getDay.js";
-// import Bus from "../../bus.js";
+import Bus from "../../bus.js";
+import { getSpotComparedGraphChart } from "../../../../api/spots";
 
 export default {
   name: "elTimeSelectView",
@@ -85,7 +91,7 @@ export default {
     contentHeight: {
       type: Number,
       default: 0
-    },
+    }
   },
   components: {},
   data() {
@@ -99,19 +105,12 @@ export default {
           );
         }
       },
-      // 初始化标签，请求第一个接口（时间参数 + 初始化景区)
-      // Tags: [
-      //   { id: "千岛湖", value: "千岛湖", type: "success" },
-      //   {
-      //     id: "西湖",
-      //     value: "西湖",
-      //     type: "success"
-      //   }
-      // ],
       // 接受标签组件发送的新增标签
-      // newAddTag:"",
-      // 向父组件发送的数据集
-      // dataset:[],
+      tags: "",
+      //初始化的标签数组
+      initTags: ["千岛湖", "西湖"],
+      // 向图表传入的数据集
+      dataset: [],
       // 时间选择范围
       timeSelect: ["按年份", "按季度", "按月份"],
 
@@ -136,7 +135,6 @@ export default {
       comparedParams: {
         startTime: "",
         endTime: "",
-        scoreOrNum: 1,
         granularity: "",
         timeType: ""
       },
@@ -159,36 +157,49 @@ export default {
       // 当前选择的时间类型：年/月/季度
       value: "",
       //颗粒度列表
-      itemList: [],
+      itemList: []
     };
   },
   mounted() {
-    // var sel = this
-    // Bus.$on('newAddTagM', newAddTag => {
-    //   console.log(newAddTag);
-    //   sel.newAddTag = newAddTag;
-    // })
-    this.initTimeParams();
+    var sel = this;
+    Bus.$on("Tags", newTagArray => {
+      var tags = newTagArray.tags;
+      var newAddtag = newTagArray.newAddTag;
+      var tagsArray = [];
+      for (var i = 0; i < tags.length; i++) {
+        tagsArray.push(tags[i].id);
+      }
+      sel.tags = tagsArray; // 所有当前景区的标签
+      if (newAddtag === "") {
+        this.initTimeParams();
+      }
+      if (newAddtag !== "") {
+        this.obtainData(this.comparedParams, "score", newAddtag);
+      }
+    });
   },
   methods: {
     //初始化时间参数
     initTimeParams() {
+      // console.log("执行initTimeParams函数");
       var endTime = funcs.getDay(new Date(), 3);
       var year = endTime.substr(0, 5);
       var month = endTime.substr(5, 2);
-      var day = endTime.substr(7, 2);
+      var day = endTime.substr(7, 3);
       var startTime =
-        year.toString() + (month - 1).toString().padStart(2, 0) + day;
+        year.toString() + (month - 3).toString().padStart(2, 0) + day;
 
       this.comparedParams = {
         startTime: startTime,
         endTime: endTime,
         granularity: "周",
-        timeType: "按月份" 
+        timeType: "按月份"
       };
+      this.obtainData(this.comparedParams, "score", this.initTags); //初始化图表
     },
+
     changeTimeRange() {
-       this.timeType = this.value;
+      this.timeType = this.value;
       if (this.value === "按月份") {
         this.dateSelector.timeType = "month";
         this.dateSelector.timePlaceholder = "选择月";
@@ -219,6 +230,7 @@ export default {
     },
     //检测时间顺序是否正确
     detectTimeSeq() {
+      console.log("执行检测时间顺序函数detectTimeSeq");
       var startTime = this.timeList.startDay,
         endTime = this.timeList.endDay,
         quarter1 = this.timeList.quarter1,
@@ -241,7 +253,6 @@ export default {
           return -1;
         }
       }
-
       if (this.value === "按季度") {
         if (startTime && endTime && quarter1 && quarter2) {
           var d1 = new Date((startTime + quarter1).replace(/\-/g, "/"));
@@ -261,15 +272,36 @@ export default {
       return 1;
     },
 
+    //从后台获取数据
+    obtainData(timeParams, scoreOrNum, tags) {
+      console.log("执行obtainData函数");
+      var params = {
+        startTime: timeParams.startTime,
+        endTime: timeParams.endTime,
+        scoreOrNum: scoreOrNum,
+        granularity: timeParams.granularity,
+        tags: tags,
+        timeType: timeParams.timeType
+      };
+      getSpotComparedGraphChart(params).then(res => {
+        console.log("执行后台请求函数，返回res.data.dataset");
+        var tempDataset = res.data.dataset;
+        if (tempDataset.length === 1) {
+          this.dataset.push(tempDataset[0]);
+        } else {
+          this.dataset = tempDataset;
+        }
+        // 得到数据，传给图表显示
+        Bus.$emit("Dataset", this.dataset);
+      });
+    },
     // 参数改变,传参给父组件
     setDataParams() {
+      console.log("执行更新当前所有景区函数setDataParams");
       this.comparedParams.granularity = this.timeList.granularity;
       if (this.detectTimeSeq()) {
-        // 向父组件发送时间参数
-        this.$emit("timeParamsM", this.comparedParams);
-        // 向标签项发送时间参数
-        // Bus.$emit("timeSelectParamsM", this.comparedParams);
-        // console.log("成功执行setDataParams")
+        // 所有当前景区的更新
+        this.obtainData(this.comparedParams, "score", this.tags);
       } else {
         this.$message.warning("error!!请正确选择时间范围");
       }
@@ -282,5 +314,10 @@ export default {
   background: rgba(255, 255, 255, 1);
   border: 1px solid rgba(236, 237, 240, 1);
   padding: 5px;
+}
+.item{
+  padding: 0px;
+  margin: 0px;
+  border:0px;
 }
 </style>
