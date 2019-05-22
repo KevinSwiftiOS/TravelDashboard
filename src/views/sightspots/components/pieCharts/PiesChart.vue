@@ -1,5 +1,6 @@
 <template>
-  <div :class="className" :id="id" :style="{height:height,width:width}">
+  <div>
+    <div :class="className" :id="id" :style="{height:height,width:width}"></div>
     <slot></slot>
   </div>
 </template>
@@ -7,11 +8,14 @@
 <script>
 import echarts from "echarts";
 import { debounce } from "@/utils";
-import { optionData } from "./util";
-import {getSpotBarchartsNumber} from "../../../../api/spots.js"
+import { optionData1 } from "./util";
+
 export default {
-  name: "BarCharts",
   props: {
+    id: {
+      type: String,
+      default: "container"
+    },
     className: {
       type: String,
       default: "chart"
@@ -24,35 +28,21 @@ export default {
       type: String,
       default: "23vh"
     },
-    id: {
-      type: String,
-      default: "container"
-    },
-    spotsNumberData:{
+    spotsScoreData: {
       type: Array,
       default: () => []
-    },
+    }
   },
   data() {
     return {
-      chart: null,
-      option: optionData,
-    //   currSpot:""
+      option: optionData1,
+      chart: null
     };
   },
   watch: {
-    spotsNumberData: {
+    spotsScoreData: {
       handler: function(newVal) {
-        let data = newVal.map((item, index) => {
-          return item;
-        });
-        data.map((item, index) => {
-          this.option.series.map((d, i) => {
-            if (d.name === item.name) {
-              d.data = item.data;
-            }
-          });
-        });
+        this.option.series[0].data = newVal;
         this.initChart();
       },
       deep: true
@@ -69,9 +59,8 @@ export default {
     }
   },
   mounted() {
-    this.loadChart();
-    // this.initChart();
-    // this.resize()
+    this.initChart();
+    this.resize();
   },
   beforeDestroy() {
     if (!this.chart) {
@@ -81,17 +70,8 @@ export default {
     this.chart.dispose();
     this.chart = null;
   },
+
   methods: {
-    //设置图表数据
-    loadChart() {
-      getSpotBarchartsNumber({
-          currSpot:"千岛湖"
-      }).then(res => {
-        this.option.xAxis[0].data = res.data.timeList;
-        this.initChart();
-        this.resize();
-      });
-    },
     initChart() {
       this.chart = echarts.init(document.getElementById(this.id));
       this.chart.setOption(this.option, true);
@@ -107,6 +87,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-</style>

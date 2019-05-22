@@ -113,23 +113,27 @@ export const constantRoutes = [{
                      noCache: true,
                      affix: true
                  }
-                 // hidden: true
              },
-            // {
-            //     path: '/hoteldashboard',
-            //     name: 'HotelDashBoard',
-            //     component: () => import('@/views/hotelDashBoard/index')
-            // },
-
+             {
+                 path: '/sightspots',
+                 component: () => import('@/views/sightspots/index'),
+                 name: 'SightSpots',
+                 meta: {
+                     title: '景点详情',
+                     icon: 'sightspots',
+                     noCache: true,
+                     affix: true
+                 }
+             },
             {
                 path: '/spider',
                 name: 'spiderDashboard',
-                component: () => import('@/views/spider/index'),
+                component: () => import('@/views/spider/Index'),
                 children: [
                     {
                         path: "detail", //爬虫详情页面
                         name: "SpiderDetail",
-                        component: () => import('@/views/spider/spiderDetail/index')
+                        component: () => import('@/views/spider/spiderDetail/Index')
                     }
                 ]
             },

@@ -57,7 +57,7 @@ import elTimeSelectView from "./components/elTimeSelect-view";
 import elTagsView from "./components/elTags-view";
 import elTagSelectView from "./components/elTagSelect-view";
 import Bus from "../bus.js";
-import { getSpotComparedGraphChart } from "@/api/spots";
+import { getSpotComparedGraphChart } from "@/api/sightspots";
 
 export default {
   name: "elSectionView",

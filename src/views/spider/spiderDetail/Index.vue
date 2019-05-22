@@ -42,7 +42,7 @@
                 data: {}
             };
         },
-        name:"index",
+        name:"Index",
         created() {
             this.init();
         },

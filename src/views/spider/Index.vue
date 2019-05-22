@@ -82,7 +82,7 @@
                 comment_time: ""
             };
         },
-        name:"index",
+        name:"Index",
         //初始化的时候
         mounted() {
             this.spiderdetail();

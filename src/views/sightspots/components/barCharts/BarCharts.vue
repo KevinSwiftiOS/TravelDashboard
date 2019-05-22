@@ -8,7 +8,7 @@
 import echarts from "echarts";
 import { debounce } from "@/utils";
 import { optionData } from "./util";
-import {getSpotBarchartsNumber} from "../../../../api/spots.js"
+import {getSpotBarchartsNumber} from "../../../../api/sightspots.js"
 export default {
   name: "BarCharts",
   props: {

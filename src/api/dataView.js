@@ -82,16 +82,6 @@ export function getRestaurantPieChartsNum() {
 }
 
 /**
- * 12.酒店饼图（POST) 近3个月的统计(已取消)
- */
-export function getPiechartsHotel() {
-    return request({
-        url: '/api/homepage/piecharts/hotel',
-        method: 'post',
-    })
-}
-
-/**
  * 12-1.酒店饼图（POST) 评分近3个月的统计
  */
 export function getHotelScorePieCharts() {
@@ -117,86 +107,6 @@ export function getHotelNumPieCharts() {
 export function getSpotHotChange() {
     return request({
         url: '/api/homepage/spothotchange',
-        method: 'post',
-    })
-}
-
-
-/**
- * 14. 获取同商区不同等级酒店以及数量
- */
-export function getSameTradeRateCount(formData) {
-    return request({
-        url: '/api/hotelpage/sametradearea/hotelratecount',
-        method: 'post',
-        params: formData,
-    })
-}
-
-/**
- * 15. 获取通向去不同等级酒店以及数量
- */
-export function getSameTradeHotelList(formData) {
-    return request({
-        url: '/api/hotelpage/sametradearea/hotelshoplist',
-        method: 'post',
-        params: formData,
-    })
-}
-
-/**
- * 16. 获取 同等级同商圈的酒店排行榜
- */
-export function getTradeHotelRankList(formData) {
-    return request({
-        url: '/api/hotelpage/sametradearea/hoteltenlimit',
-        method: 'post',
-        params: formData,
-    })
-}
-
-/**
- * 17. 获取 同等级同商圈的酒店排行榜
- */
-export function hotelComTagSum() {
-    return request({
-        url: '/api/qdhhotelcomtagsum',
-        method: 'post',
-    })
-}
-
-/**
- * 18. 获取每个标签对应评论数量
- */
-
-export function hotelComFeatureWord(formData) {
-    return request({
-        url: '/api/qdhhotelcomfeatureword',
-        method: 'post',
-        params: formData,
-    })
-}
-
-// /api/homepage/keyindicator
-
-/**
- * 19. 获取该月和概念的同比和环比
- */
-
-export function hotelComNumTotal() {
-    return request({
-        url: '/api/hotelpage/qdhhotelcomnumtotal',
-        method: 'post',
-    })
-}
-
-/**
- * 20. 获取该月和概念的同比和环比
- */
-
-export function hotelComNumChange() {
-    return request({
-        url: '/api/hotelpage/qdhhotelhotchange',
         method: 'post',
     })
 }

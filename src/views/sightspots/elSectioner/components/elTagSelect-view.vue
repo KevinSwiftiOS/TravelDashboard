@@ -29,8 +29,6 @@
 </template>
 <script>
 import { spotsList } from "../../base/spotInf.js";
-import { setTimeout } from "timers";
-import { spots } from "../../../../base/dict";
 export default {
   name: "elTagsView",
   props: {
@@ -58,7 +56,14 @@ export default {
       //删除的标签
       removeTag: "",
       //标签数组
-      tags: [],
+      tags: [
+        { id: "千岛湖", value: "千岛湖", type: "success" },
+        {
+          id: "",
+          value: "",
+          type: "success"
+        }
+      ],
       removeTags: []
     };
   },
@@ -98,7 +103,7 @@ export default {
         this.scoreOrNumber = "num";
       }
     },
-    // 深拷贝数组
+        // 深拷贝数组
     arrayCopy(source){
       var sourceCopy = source instanceof Array ? [] : {};
       for(var item in source){
@@ -106,7 +111,6 @@ export default {
       }
       return sourceCopy;
     },
-
     // 初始化选中标签
     initArray() {
       this.removeTags = [];
@@ -129,18 +133,20 @@ export default {
 
     // 标签移除
     handleClose(index) {
+      // console.log("执行number标签移除函数handleClose");
       var eTag = this.tags.splice(index, 1)[0];
       eTag.type = "info";
       this.removeTags.push(eTag);
-      this.$emit("removeScoreTag", eTag);
+
+      this.$emit("removeNumberTag", eTag);
     },
     //标签添加
     handleAdd(index) {
-      var eTag = this.removeTags.splice(index, 1)[0];
-      this.removeTag = eTag;
-      eTag["type"] = "success";
-      this.tags.push(eTag);
-      this.newAddTag = eTag.value;
+      var Tag = this.removeTags.splice(index, 1)[0];
+      this.removeTag = Tag;
+      Tag["type"] = "success";
+      this.tags.push(Tag);
+      this.newAddTag = Tag.value;
       this.sendTagsArray();
     },
 
@@ -150,7 +156,7 @@ export default {
         tags: this.tags,
         newAddTag: this.newAddTag
       };
-      this.$emit("addScoreTag", newTagObj);
+      this.$emit("addNumberTag", newTagObj);
     }
   }
 };

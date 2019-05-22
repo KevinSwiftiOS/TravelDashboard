@@ -89,7 +89,7 @@
 
 <script>
 import { funcs } from "../../base/getDay.js";
-import { getSpotComparedGraphChart } from "../../../../api/spots";
+import { getSpotComparedGraphChart } from "../../../../api/sightspots";
 import { setTimeout } from "timers";
 
 export default {
