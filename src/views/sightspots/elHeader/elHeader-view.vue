@@ -139,7 +139,7 @@ export default {
       },
       
       value: "",
-      currSpot: "西湖",
+      currSpot: "中心湖",
       endDate: "",
 
       //图表id

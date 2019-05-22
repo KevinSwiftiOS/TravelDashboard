@@ -68,8 +68,8 @@ export default {
         var self = this;
         self.tags = [];
         setTimeout(function() {
-          var obj1 = { id: "千岛湖", value: "千岛湖", type: "success" };
-          if (newVal !== "千岛湖") {
+          var obj1 = { id: "中心湖", value: "中心湖", type: "success" };
+          if (newVal !== "中心湖") {
             var obj2 = {
               id: newVal,
               value: newVal,
@@ -111,15 +111,15 @@ export default {
     initArray() {
       this.removeTags = [];
       var tempArray =this.arrayCopy(spotsList);
-      if(this.currSpot === "千岛湖"){
+      if(this.currSpot === "中心湖"){
         for(var i =0; i<tempArray.length; i++){
-          if (tempArray[i].id !== "千岛湖") {
+          if (tempArray[i].id !== "中心湖") {
             this.removeTags.push(tempArray[i]);
           }
         }
       }else{
         for(var i =0; i<tempArray.length; i++){
-          if (tempArray[i].id !== "千岛湖" && tempArray[i].id !== this.currspot) {
+          if (tempArray[i].id !== "中心湖" && tempArray[i].id !== this.currspot) {
             this.removeTags.push(tempArray[i]);
         }
       }}

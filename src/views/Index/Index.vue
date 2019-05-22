@@ -19,7 +19,11 @@
                                 <router-link to="/spots">
                     <i class="el-icon-news">景区详情</i>
                 </router-link>
-                
+                               </router-link>
+
+                                <router-link to="/sightspots">
+                    <i class="el-icon-news">景点详情</i>
+                </router-link>
 
 
                 <router-link to="/spider">

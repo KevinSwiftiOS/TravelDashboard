@@ -127,13 +127,13 @@ export default {
           self.initGranularity();
           self.tags = [];
           self.initTags = [];
-          if (newVal !== "千岛湖") {
-            self.initTags.push("千岛湖", newVal);
-            self.tags.push("千岛湖", newVal)
+          if (newVal !== "中心湖") {
+            self.initTags.push("中心湖", newVal);
+            self.tags.push("中心湖", newVal)
             console.log(self.initTags);
           } else {
-            self.initTags.push("千岛湖");
-            self.tags.push("千岛湖")
+            self.initTags.push("中心湖");
+            self.tags.push("中心湖")
             console.log(self.initTags);
           }
           self.initTimeParams();

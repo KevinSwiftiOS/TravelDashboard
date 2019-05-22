@@ -1,11 +1,11 @@
 //景区相关信息 经纬度 名字 通过id获取
 var spotsList = [{
-    id: "中心湖区",
+    id: "中心湖",
     value: "中心湖",
     type: "info"
   },
   {
-    id: "梅峰揽胜",
+    id: "梅峰",
     value: "梅峰",
     type: "info"
   },
@@ -25,7 +25,7 @@ var spotsList = [{
     type: "info"
   },
   {
-    id: "东南湖区",
+    id: "东南湖",
     value: "东南湖",
     type: "info"
   },
@@ -65,7 +65,7 @@ var spotsList = [{
     type: "info"
   },
   {
-    id: "下姜村",
+    id: "下姜",
     value: "下姜",
     type: "info"
   },
@@ -75,17 +75,17 @@ var spotsList = [{
     type: "info"
   },
   {
-    id: "龙川湾",
+    id: "龙川",
     value: "龙川",
     type: "info"
   },
   {
-    id: "芹川古村",
+    id: "芹川",
     value: "芹川",
     type: "info"
   },
   {
-    id: "千岛秘境",
+    id: "秘境",
     value: "秘境",
     type: "info"
   },
