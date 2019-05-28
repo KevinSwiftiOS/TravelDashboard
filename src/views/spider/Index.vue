@@ -35,16 +35,16 @@
                 </el-row>
         </block-box>
             <el-table :data="list" border style="width: 100%">
-                <el-table-column prop="comment_user_name" label="评论用户" width="180" align="center"></el-table-column>
+                <el-table-column prop="comment_user_name" label="评论用户" width="160" align="center"></el-table-column>
                 <el-table-column prop="shop_name" label="评论店铺" width="180" align="center"></el-table-column>
-                <el-table-column prop="data_website" label="评论平台" width="180" align="center"></el-table-column>
+                <el-table-column prop="data_website" label="评论平台" width="120" align="center"></el-table-column>
                 <el-table-column prop="comment_time" label="评论日期" width="120" align="center"></el-table-column>
                 <el-table-column label="评论内容" width="400" align="center" prop="comment_short_content"></el-table-column>
-                <el-table-column prop="comment_score" label="评论分数" align="center" width="120"></el-table-column>
+                <el-table-column prop="comment_score" label="评论分数" align="center" width="100"></el-table-column>
                 <el-table-column prop="crawl_time" label="爬取时间" align="center" width="180"></el-table-column>
                 <el-table-column label="评论详情" align="center">
                     <template slot-scope="scope">
-                        <el-button size="mini" @click="content_detail(scope.$index, scope.row)">点击查看详情</el-button>
+                        <el-button size="mini" @click="content_detail(scope.$index, scope.row)">查看详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
