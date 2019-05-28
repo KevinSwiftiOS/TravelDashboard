@@ -5,20 +5,29 @@
         src="../../../assets/DetailsImgs/listIcon.png"
         style="width: 15px;height: 15px; margin-right:5px;"
       >
-      <span class="chartTitle">
-        景区同时段
-        </span>
-        <span class="chartTitle" style="color:green">评分</span>
-        <span class="chartTitle">对比</span>
+      <span class="chartTitle">景点同时段</span>
+      <span class="chartTitle" style="color:green">评分</span>
+      <span class="chartTitle">对比</span>
     </div>
     <el-card :gutter="24" class="chartBoard">
-      <el-time-select-view :id="'scoreTime'" :currSpot="currSpot" :newTagsObj="newScoreTag" :removeTagsObj="reScoreTag" @scoreDataset="scoreDataset"></el-time-select-view>
+      <el-time-select-view
+        :id="'scoreTime'"
+        :currSpot="currSpot"
+        :newTagsObj="newScoreTag"
+        :removeTagsObj="reScoreTag"
+        @scoreDataset="scoreDataset"
+      ></el-time-select-view>
       <hr style="border: 1px solid rgba(236, 237, 240, 1);">
       <el-row :gutter="24">
         <el-col :lg="18">
-          <pie-charts :id="'scoreCharts'" :Dataset="isScoreDataset"></pie-charts>
+          <pie-charts :id="'scoreCharts'" :list="isScoreDataset"></pie-charts>
         </el-col>
-        <el-tags-view :id="'scoreTags'" :currSpot="currSpot" @addScoreTag="addScoreTag" @removeScoreTag="removeScoreTag"></el-tags-view>
+        <el-tags-view
+          :id="'scoreTags'"
+          :currSpot="currSpot"
+          @addScoreTag="addScoreTag"
+          @removeScoreTag="removeScoreTag"
+        ></el-tags-view>
         <!-- <el-col :lg="6"></el-col> -->
       </el-row>
     </el-card>
@@ -27,20 +36,29 @@
         src="../../../assets/DetailsImgs/listIcon.png"
         style="width: 15px;height: 15px; margin-right:5px;"
       >
-      <span class="chartTitle">
-        景区同时段
-        </span>
-        <span class="chartTitle" style="color:green">评论数</span>
-        <span class="chartTitle">对比</span>
+      <span class="chartTitle">景点同时段</span>
+      <span class="chartTitle" style="color:green">评论数</span>
+      <span class="chartTitle">对比</span>
     </div>
     <el-card :gutter="24" class="chartBoard">
-      <el-time-select-view :id="'numberTime'" :currSpot="currSpot" :newTagsObj="newNumberTag" :removeTagsObj="reNumberTag" @numDataset="numDataset"></el-time-select-view>
+      <el-time-select-view
+        :id="'numberTime'"
+        :currSpot="currSpot"
+        :newTagsObj="newNumberTag"
+        :removeTagsObj="reNumberTag"
+        @numDataset="numDataset"
+      ></el-time-select-view>
       <hr style="border: 1px solid rgba(236, 237, 240, 1);">
       <el-row :gutter="24">
         <el-col :lg="18">
-          <pie-charts :id="'numberCharts'" :Dataset="isNumDataset"></pie-charts>
+          <pie-charts :id="'numberCharts'" :list="isNumDataset"></pie-charts>
         </el-col>
-        <el-tag-select-view :id="'numberTags'" :currSpot="currSpot" @addNumberTag="addNumberTag" @removeNumberTag="removeNumberTag"></el-tag-select-view>
+        <el-tag-select-view
+          :id="'numberTags'"
+          :currSpot="currSpot"
+          @addNumberTag="addNumberTag"
+          @removeNumberTag="removeNumberTag"
+        ></el-tag-select-view>
         <!-- <el-col :lg="6"></el-col> -->
       </el-row>
     </el-card>
@@ -81,14 +99,14 @@ export default {
       isScore: "score",
       isNum: "num",
 
-      isScoreDataset:[],
-      isNumDataset:[],
+      isScoreDataset: [],
+      isNumDataset: [],
 
-      newNumberTag:{}, 
-      newScoreTag:{},
+      newNumberTag: {},
+      newScoreTag: {},
 
-      reScoreTag:{},
-      reNumberTag:{}
+      reScoreTag: {},
+      reNumberTag: {}
     };
   },
   mounted() {
@@ -99,29 +117,26 @@ export default {
     });
   },
   methods: {
-    scoreDataset(dataset){
-      console.log("执行scoreDataset")
-      this.isScoreDataset = dataset;
-      // console.log(this.isScoreDataset)
+    scoreDataset(dataset) {
+      this.isScoreDataset = [];
+      this.isScoreDataset.push(dataset)
     },
-    numDataset(dataset){
-      console.log("执行numDataset")
-      this.isNumDataset = dataset;
-      // console.log(this.isNumDataset)
+    numDataset(dataset) {
+      this.isNumDataset = [];
+      this.isNumDataset.push(dataset);
     },
-    addScoreTag(newTagObj){
+    addScoreTag(newTagObj) {
       this.newScoreTag = newTagObj;
     },
-    addNumberTag(newTagObj){
+    addNumberTag(newTagObj) {
       this.newNumberTag = newTagObj;
     },
-    removeScoreTag(removeTagObj){
+    removeScoreTag(removeTagObj) {
       this.reScoreTag = removeTagObj;
     },
-        removeNumberTag(removeTagObj){
-          console.log("执行removeNumberTag函数")
+    removeNumberTag(removeTagObj) {
+      // console.log("执行removeNumberTag函数");
       this.reNumberTag = removeTagObj;
-      console.log(this.reNumberTag)
     }
   }
 };

@@ -8,6 +8,10 @@ import getters from './getters'
 
 Vue.use(Vuex);
 
+const state = {
+    showFooter:true,
+    changalbeNum:0
+}
 const store = new Vuex.Store({
     state: {
         //
@@ -22,8 +26,9 @@ const store = new Vuex.Store({
         app,
         user,
         permission,
-        tagsView
+        tagsView,
     },
+    state,
     getters
 });
 

@@ -127,14 +127,12 @@ export default {
           self.initGranularity();
           self.tags = [];
           self.initTags = [];
-          if (newVal !== "中心湖") {
-            self.initTags.push("中心湖", newVal);
-            self.tags.push("中心湖", newVal)
-            console.log(self.initTags);
+          if (newVal !== "千岛湖") {
+            self.initTags.push("千岛湖", newVal);
+            self.tags.push("千岛湖", newVal);
           } else {
-            self.initTags.push("中心湖");
-            self.tags.push("中心湖")
-            console.log(self.initTags);
+            self.initTags.push("千岛湖");
+            self.tags.push("千岛湖");
           }
           self.initTimeParams();
         });
@@ -164,11 +162,18 @@ export default {
     removeTagsObj: {
       handler: function(newVal) {
         var self = this;
-        var array = self.dataset;
+        var obj = self.data.seriesData;
+        var legendObj = self.data.legendData;
         setTimeout(function() {
-          for (var i = 0; i < array.length; i++) {
-            if (array[i][0] === newVal.id) {
-              array.splice(i, 1);
+          for (var i = 0; i < obj.length; i++) {
+            if (obj[i].name === newVal.id) {
+              obj.splice(i, 1);
+              break;
+            }
+          }
+          for (var i = 0; i < legendObj.length; i++) {
+            if (legendObj[i] === newVal.id) {
+              legendObj.splice(i, 1);
               break;
             }
           }
@@ -178,8 +183,13 @@ export default {
               break;
             }
           }
-          self.dataset = array;
-          self.$emit("Dataset", this.dataset);
+          self.data.seriesData = obj;
+          self.data.legendData = legendObj;
+          if (self.scoreOrNum === "score") {
+            self.$emit("scoreDataset", self.data);
+          } else {
+            self.$emit("numDataset", self.data);
+          }
         });
       }
     }
@@ -261,9 +271,7 @@ export default {
   methods: {
     //score?number
     isScoreOrNumber() {
-      console.log("执行isScoreOrNumber函数");
-      console.log("this.id");
-      console.log(this.id);
+      // console.log("执行isScoreOrNumber函数");
       if (this.id === "scoreTime") {
         this.scoreOrNum = "score";
       }
@@ -297,7 +305,7 @@ export default {
       }
     },
     changeTimeRange() {
-      console.log("执行时间范围参数改变函数changeTimeRange");
+      // console.log("执行时间范围参数改变函数changeTimeRange");
       this.comparedParams.timeType = this.value;
       if (this.value === "按月份") {
         this.dateSelector.timeType = "month";
@@ -335,7 +343,7 @@ export default {
     },
     //检测时间顺序是否正确
     detectTimeSeq() {
-      console.log("执行检测时间顺序函数detectTimeSeq");
+      // console.log("执行检测时间顺序函数detectTimeSeq");
       var startTime = this.timeList.startDay,
         endTime = this.timeList.endDay,
         quarter1 = this.timeList.quarter1,
@@ -394,16 +402,19 @@ export default {
       };
       getSpotComparedGraphChart(params).then(res => {
         console.log("执行后台请求函数，返回res.data.dataset");
-        var tempDataset = res.data.dataset;
-        if (tempDataset.length === 1) {
-          this.dataset.push(tempDataset[0]);
+        var tempDataset = res.data;
+        if (tempDataset.seriesData.length === 1) {
+          this.data.seriesData.push(tempDataset.seriesData[0]);
+          this.data.legendData.push(tempDataset.legendData[0]);
         } else {
-          this.dataset = tempDataset;
+          this.data.seriesData = tempDataset.seriesData;
+          this.data.legendData = tempDataset.legendData;
         }
+        this.data.xAxis = tempDataset.xAxis;
         if (scoreOrNum === "score") {
-          this.$emit("scoreDataset", this.dataset);
+          this.$emit("scoreDataset", this.data);
         } else {
-          this.$emit("numDataset", this.dataset);
+          this.$emit("numDataset", this.data);
         }
       });
     },

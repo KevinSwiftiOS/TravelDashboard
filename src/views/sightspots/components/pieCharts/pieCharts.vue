@@ -29,9 +29,10 @@ export default {
       type: String,
       default: "23vh"
     },
-    Dataset: {
+    list: {
       type: Array,
-      default: () => []
+      // default: () => []
+      // required: true
     }
   },
   data() {
@@ -39,9 +40,24 @@ export default {
       option: optionData,
       chart: null,
       xh_Height: 0,
+      data:{}
     };
   },
+  computed:{
+    dataset:function(){
+      return this.list;
+    }
+  },
   watch: {
+    dataset:{
+      handler:function(newVal){
+      //  console.log('我改变了');
+       let self = this;
+       self.data = newVal[0]
+       this.initChart();
+      },
+      deep:true
+    },
     height: {
       handler: function(newVal) {
         let self = this;
@@ -51,43 +67,10 @@ export default {
           }
         }, 400);
       }
-    },
-    Dataset: {
-      handler: function(newVal) {
-        let self = this;
-        console.log("图表1接受到的数据");
-        setTimeout(function() {
-          self.option.dataset.source = newVal;
-          console.log("self.option.dataset.source");
-          console.log(self.option.dataset.source);
-          self.option.series = [];
-          for (var i = 1; i < newVal.length; i++) {
-            self.option.series.push({
-              type: "line",
-              smooth: true,
-              seriesLayoutBy: "row"
-            });
-          }
-          self.option.series.push({
-            type: "pie",
-            id: "pie",
-            radius: "45%",
-            center: ["85%", "50%"],
-            label: {
-              formatter: ["{b}", "({d}%)"].join("\n")
-            },
-            encode: {
-              itemName: "time",
-              x: "time"
-            }
-          });
-          self.initChart();
-        });
-      },
-      // immediate: true
     }
   },
   mounted() {
+    // this.initChart();
     this.resize();
   },
   beforeDestroy() {
@@ -101,30 +84,17 @@ export default {
 
   methods: {
     initChart() {
+      // console.log("执行initChart函数");
+      this.option.series = [];
+      this.option.legend.data = [];
+      this.option.xAxis.data = [];
+
+      this.option.xAxis.data = this.data.xAxis;
+      this.option.legend.data = this.data.legendData;
+      this.option.series = this.data.seriesData;
+
       this.chart = echarts.init(document.getElementById(this.id));
-      this.chart.on("updateAxisPointer", event => {
-        var xAxisInfo = event.axesInfo[0];
-        if (xAxisInfo) {
-          var dimension = xAxisInfo.value + 1;
-          this.chart.setOption({
-            series: [
-              {
-                id: "pie",
-                label: {
-                  formatter: ["{b}", "{@[" + dimension + "]}", "({d}%)"].join(
-                    "\n"
-                  )
-                },
-                encode: {
-                  value: dimension,
-                  tooltip: dimension
-                }
-              }
-            ]
-          });
-        }
-      });
-      this.chart.setOption(this.option);
+      this.chart.setOption(this.option,true);
     },
     resize() {
       this.__resizeHandler = debounce(() => {

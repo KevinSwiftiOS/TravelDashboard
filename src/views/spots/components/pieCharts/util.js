@@ -3,41 +3,42 @@ export const IdData = {
     SpotsNumId: 'SpotsNumId',
 }
 export const optionData = {
+    // title: {
+    //     text: '折线图堆叠'
+    // },
     color: ['#09b4eb', '#aac966', '#a19be6', '#10d4c8', '#d95850', '#893448', '#f2d643', '#eb8146', '#ffb248',
-        '#ebdba4', '#0ef533',  '#1393f0', '#1259e3',
-         '#74647a', '#f2094f', '#ac07fa', '#ff07e7', '#0c690a'
+        '#ebdba4', '#0ef533', '#1393f0', '#1259e3',
+        '#74647a', '#f2094f', '#ac07fa', '#ff07e7', '#0c690a'
     ],
     textStyle: {
         fontWeight: "bold",
         fontFamily: "Microsoft YaHei",
         fontSize: 10,
     },
-    legend: {
-        bottom: "86%",
-        itemGap: 1
-    },
     tooltip: {
-        trigger: 'axis',
-        axisPointer: { // 坐标轴指示器，坐标轴触发有效
-            type: 'cross', // 默认为直线，可选为：'line' | 'shadow'
-        },
+        trigger: 'axis'
     },
-    dataset: {
-        source: []
-    },
-    xAxis: {
-        type: 'category'
-    },
-    yAxis: {
-        min: 1,
-        gridIndex: 0 //不知道为啥 只能是0，不然会报type not defined错误
+    legend: {
+        data: []
     },
     grid: {
-        right: '250',
-        bottom: "10",
-        top: "20%",
-        left: "3",
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
         containLabel: true
+    },
+    // toolbox: {
+    //     feature: {
+    //         saveAsImage: {}
+    //     }
+    // },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: []
+    },
+    yAxis: {
+        type: 'value'
     },
     series: []
 }

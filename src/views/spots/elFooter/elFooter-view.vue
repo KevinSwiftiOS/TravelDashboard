@@ -5,15 +5,12 @@
         src="../../../assets/DetailsImgs/commentIcon.png"
         style="width: 15px;height: 15px; margin-right: 5px;"
       >
-      <span class="chartTitle">酒店评论</span>
+      <span class="chartTitle">景区评论</span>
     </div>
     <el-tabs v-model="featureWord" @tab-click="handleClick">
-      <el-tab-pane :label="tabsList[0]" name="位置"></el-tab-pane>
-      <el-tab-pane :label="tabsList[1]" name="服务"></el-tab-pane>
-      <el-tab-pane :label="tabsList[2]" name="性价比"></el-tab-pane>
+      <el-tab-pane :label="tabsList[0]" name="好评"></el-tab-pane>
+      <el-tab-pane :label="tabsList[1]" name="差评"></el-tab-pane>
     </el-tabs>
-    <el-button :type="goodButton" icon="el-icon-success" @click="selectGood">{{goodStr}}</el-button>
-    <el-button :type="badButton" icon="el-icon-error" @click="selectBad">{{badStr}}</el-button>
 
     <el-table
       :data="commentList"
@@ -23,7 +20,6 @@
       :row-class-name="tableRowClassName"
       :height="changeHeightName()"
     >
-      <!-- <el-table-column type="index"></el-table-column> -->
       <el-table-column class="text" align="left" width="1320">
         <template slot-scope="scope" class="content">
           <span v-html="showDate(scope.row.content)"></span>
@@ -36,201 +32,126 @@
         style="margin-top:5px; margin-left:5px;"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currPage"
+        :current-page="page.currPage"
         :page-sizes="[6,12,24]"
         layout="total, prev, pager, next, jumper, sizes"
-        :total="total"
+        :total="page.total"
       ></el-pagination>
     </div>
   </div>
 </template>
 
 <script>
-import { getHotelLabelList, getHotelComment } from "@/api/hotel";
+import Bus from "../bus.js"
+import { getCommentNumber, getCommentList } from "@/api/spots";
 
 export default {
   data() {
     return {
-      infoList: [], // 后台接口/api/qdhhotelcomtagsum所有数据
-      tabsList: [],
-      commentList: [],
-      featureWord: "位置",
-      goodButton: "primary",
-      badButton: "",
-      goodStr: "",
-      badStr: "",
-      currPage: 1,
-      pageSize: 6,
-      commentClass: 1,
-      total: 0,
-      totalpage: 0,
-      goodNum: 0,
-      badNum: 0,
-
+      currSpot:"",
+      tabsList:[],
+      commentList:[],
+      totalNumber:{
+        goodNumber:0,
+        badNumber:0
+      },
+      page:{
+        currPage:1,
+        pageSize:6,
+        total:0
+      },
+      featureWord:"", //好评 差评
       featureWordArray: {
         // 特征词
-        服务: ["服务", "态度"],
-        位置: ["方便", "便捷", "交通", "位置"],
-        性价比: [
-          "实惠",
-          "推荐",
-          "满意",
-          "排名",
-          "口碑",
-          "性价比",
-          "强推",
-          "差评",
-          "失望",
-          "不够吃",
-          "贵",
-          "不会去",
-          "性价比"
-        ]
+        好评: ["满意", "不错","好","心旷神怡","美","干净", "愉快", "值得","漂亮","方便","宜人","舒服"],
+        差评: ["商业", "不值", "坑", "差","没","失望","加价","一般","烦","贵","不咋","低"],
       }
     };
   },
   mounted() {
-    this.initTabsList();
+        var sel = this;
+    //接受elHeader中的当前景区参数currSpot
+    Bus.$on("currSpot", currSpot => {
+      sel.currSpot = currSpot;
+      console.log(sel.currSpot)
+      sel.initTabsList();
+    });
+    
   },
   methods: {
     // 初始化标签列表
     initTabsList: function() {
-      console.log("执行initTabsList");
-      getHotelLabelList().then(res => {
-        this.infoList = res.data["infoList"];
-        var resultNum = [];
-        for (var i = 0; i < this.infoList.length; i++) {
-          if (this.infoList[i].name === "位置") {
-            var array = this.infoList[i];
-            resultNum[0] = array.count[0] + array.count[1];
-            continue;
-          }
-          if (this.infoList[i].name === "服务") {
-            var array = this.infoList[i];
-            resultNum[1] = array.count[0] + array.count[1];
-            continue;
-          }
-          if (this.infoList[i].name === "性价比") {
-            var array = this.infoList[i];
-            resultNum[2] = array.count[0] + array.count[1];
-          }
-        }
-        this.tabsList.push("位置(" + resultNum[0] + ")");
-        this.tabsList.push("服务(" + resultNum[1] + ")");
-        this.tabsList.push("性价比(" + resultNum[2] + ")");
+      getCommentNumber({
+        currSpot:this.currSpot
+      }).then(res => {
+        this.totalNumber.goodNumber = res.data.goodNumber[0].commentNumber;
+        this.totalNumber.badNumber = res.data.badNumber[0].commentNumber;
 
-        this.initButtonList(this.featureWord);
+        this.tabsList.push("好评(" + this.totalNumber.goodNumber + ")");
+        this.tabsList.push("差评(" + this.totalNumber.badNumber + ")");
+
+        this.page.total = this.totalNumber.goodNumber;  //初始化页数
+        this.featureWord = "好评";
+
         this.loadCommentList(
           this.featureWord,
-          this.currPage,
-          this.pageSize,
-          this.commentClass
+          this.page.currPage,
+          this.page.pageSize,
+          this.currSpot
         );
       });
     },
-
-    // 初始化按钮列表
-    initButtonList: function(value) {
-      console.log("执行initButtonList, value=");
-      var array = this.infoList;
-      for (var i = 0; i < array.length; i++) {
-        if (value === array[i].name) {
-          var obj = array[i].count;
-          this.badNum = obj[0];
-          this.goodNum = obj[1];
-          this.badStr = "差评(" + obj[0] + ")";
-          this.goodStr = "好评(" + obj[1] + ")";
-        }
-        this.selectGood();
-      }
-    },
-
-    // 标签变更事件 this.featureWord变更
-    handleClick(tab, event) {
-      console.log(
-        "执行handleClick函数 this.featureWord变更，需要相应更新应用到的函数"
-      );
-      this.featureWord = tab.name; // location
-      this.initButtonList(this.featureWord);
-      this.loadCommentList(
-        this.featureWord,
-        this.currPage,
-        this.pageSize,
-        this.commentClass
-      );
-    },
-
-    // 加载评论列表信息
-    loadCommentList: function(featureWord, currPage, pageSize, commentClass) {
+        // 加载评论列表信息
+    loadCommentList: function(featureWord, currPage, pageSize, currSpot) {
       console.log("执行loadCommentList函数");
       var param = {
-        featureWord: featureWord,
+        tagname: featureWord,
         currPage: currPage,
         pageSize: pageSize,
-        commentClass: commentClass
+        currSpot: currSpot
       };
-      getHotelComment(param).then(res => {
+      getCommentList(param).then(res => {
         this.commentList = res.data.commentList;
       });
     },
 
-    // 总数变更
-    loadTotal: function(totalNum) {
-      console.log("执行loadTotalPage函数，总页数变更");
-      this.total = totalNum;
-    },
-
-    // 点击好评 事件 this.commentClass变更
-    selectGood: function() {
-      console.log("点击好评事件");
-      this.goodButton = "primary";
-      this.badButton = "";
-      this.commentClass = 1;
-      this.currPage = 1;
+    // 标签变更事件 this.featureWord变更
+    handleClick(tab, event) {
+      console.log("执行handleClick函数");
+      this.featureWord = tab.name; // 好评
+      if(this.featureWord === "好评"){
+        this.page.total = this.totalNumber.goodNumber;
+      }
+      if(this.featureWord === "差评"){
+        this.page.total = this.totalNumber.badNumber;
+      }
       this.loadCommentList(
         this.featureWord,
-        this.currPage,
-        this.pageSize,
-        this.commentClass
+        this.page.currPage,
+        this.page.pageSize,
+        this.currSpot
       );
-      this.loadTotal(this.goodNum);
-    },
-
-    // 点击差评事件 this.commentClass变更
-    selectBad: function() {
-      console.log("点击差评事件");
-      this.badButton = "primary";
-      this.goodButton = "";
-      this.commentClass = -1;
-      this.currPage = 1;
-      this.loadCommentList(
-        this.featureWord,
-        this.currPage,
-        this.pageSize,
-        this.commentClass
-      );
-      this.loadTotal(this.badNum);
     },
 
     handleSizeChange(val) {
-      this.pageSize = val;
-      this.currPage = 1;
+      this.page.pageSize = val;
+      this.page.currPage = 1;
       console.log(`每页 ${val} 条`);
       this.loadCommentList(
         this.featureWord,
-        this.currPage,
-        this.pageSize,
-        this.commentClass
+        this.page.currPage,
+        this.page.pageSize,
+        this.currSpot
       );
     },
     handleCurrentChange(val) {
       console.log("当前页数变更，执行handleCurrentChang函数");
-      this.currPage = val;
+      this.page.currPage = val;
       this.loadCommentList(
         this.featureWord,
-        this.currPage,
-        this.pageSize,
-        this.commentClass
+        this.page.currPage,
+        this.page.pageSize,
+        this.currSpot
       );
       console.log(`当前页: ${val}`);
     },

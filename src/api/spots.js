@@ -59,3 +59,25 @@ export function getSpotComparedGraphChart(params) {
         data:params
     })
 }
+
+/**
+ * 4.5 景点评论模块
+ */
+
+// 4.5.1 切换景区，返回当前景点的好评数和差评数
+export function getCommentNumber(params) {
+    return request({
+        url: '/api/spotspage/commentanalysis/totalnumber',
+        method: 'post',
+        data: params
+    })
+}
+
+// 4.5.2 点击分页，切换显示的评论内容
+export function getCommentList(params) {
+    return request({
+        url: '/api/spotspage/commentanalysis/commentlist',
+        method: 'post',
+        data: params
+    })
+}
