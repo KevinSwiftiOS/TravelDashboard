@@ -30,7 +30,7 @@ export default {
       default: "23vh"
     },
     list: {
-      type: Array,
+      type: Array
       // default: () => []
       // required: true
     }
@@ -40,23 +40,23 @@ export default {
       option: optionData,
       chart: null,
       xh_Height: 0,
-      data:{}
+      data: {}
     };
   },
-  computed:{
-    dataset:function(){
+  computed: {
+    dataset: function() {
       return this.list;
     }
   },
   watch: {
-    dataset:{
-      handler:function(newVal){
-      //  console.log('我改变了');
-       let self = this;
-       self.data = newVal[0]
-       this.initChart();
+    dataset: {
+      handler: function(newVal) {
+        //  console.log('我改变了');
+        let self = this;
+        self.data = newVal[0];
+        this.initChart();
       },
-      deep:true
+      deep: true
     },
     height: {
       handler: function(newVal) {
@@ -84,17 +84,40 @@ export default {
 
   methods: {
     initChart() {
-      // console.log("执行initChart函数");
+      console.log("执行initChart函数");
       this.option.series = [];
       this.option.legend.data = [];
       this.option.xAxis.data = [];
-
+      // var array = this.data.seriesData;
+      // for (var i = 0; i < array.length; i++) {
+      //   array[i].itemStyle = {
+      //     normal: {
+      //       color: "rgba(62,139,222,1)" //线颜色
+      //     }
+      //   };
+      //   array[i].areaStyle = {
+      //     normal: {
+      //       color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      //         {
+      //           //折线图颜色渐变
+      //           offset: 0,
+      //           color: "rgba(62,139,222,0.6)"
+      //         },
+      //         {
+      //           offset: 1,
+      //           color: "rgba(62,139,222,0.01)"
+      //         }
+      //       ])
+      //     }
+      //   };
+      // }
       this.option.xAxis.data = this.data.xAxis;
       this.option.legend.data = this.data.legendData;
       this.option.series = this.data.seriesData;
+      // this.option.series = array;
 
       this.chart = echarts.init(document.getElementById(this.id));
-      this.chart.setOption(this.option,true);
+      this.chart.setOption(this.option, true);
     },
     resize() {
       this.__resizeHandler = debounce(() => {

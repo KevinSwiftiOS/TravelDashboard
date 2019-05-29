@@ -23,6 +23,7 @@
           :format="dateSelector.timeFormat"
           :value-format="dateSelector.timeVFormat"
           :picker-options="dateOption"
+          :editable="dateSelector.editable"
         ></el-date-picker>
         <el-select
           size="mini"
@@ -48,6 +49,7 @@
           :format="dateSelector.timeFormat"
           :value-format="dateSelector.timeVFormat"
           :picker-options="dateOption"
+          :editable="dateSelector.editable"
           @change="detectTime"
         ></el-date-picker>
         <el-select
@@ -144,15 +146,12 @@ export default {
         var tags = newVal.tags;
         var newAddtag = newVal.newAddTag;
         var tagsArray = [];
+        self.addTag = newAddtag;
         setTimeout(function() {
           for (var i = 0; i < tags.length; i++) {
             tagsArray.push(tags[i].id);
           }
           self.tags = tagsArray; // 所有当前景区的标签
-          // if (newAddtag === "") {
-          //   self.initTags = tagsArray;
-          //   self.initTimeParams();
-          // }
           if (newAddtag !== "") {
             self.obtainData(self.comparedParams, self.scoreOrNum, newAddtag);
           }
@@ -164,6 +163,7 @@ export default {
         var self = this;
         var obj = self.data.seriesData;
         var legendObj = self.data.legendData;
+        self.removeTag = newVal.id;
         setTimeout(function() {
           for (var i = 0; i < obj.length; i++) {
             if (obj[i].name === newVal.id) {
@@ -246,7 +246,8 @@ export default {
         timeType: "",
         timePlaceholder: "",
         timeFormat: "",
-        timeVFormat: ""
+        timeVFormat: "",
+        editable:false
       },
       // 开始时间 结束时间
       timeList: {
@@ -304,6 +305,16 @@ export default {
         this.timeList.granularity = "周";
       }
     },
+    // 初始化时间参数
+    initTimeListFun(){
+      this.timeList = {
+        startDay: "",
+        endDay: "",
+        quarter1: "",
+        quarter2: "",
+        granularity: ""
+      }
+    },
     changeTimeRange() {
       console.log("执行时间范围参数改变函数changeTimeRange");
       this.comparedParams.timeType = this.value;
@@ -314,6 +325,7 @@ export default {
         this.dateSelector.timeVFormat = "yyyy-MM";
         //颗粒度选择
         this.itemList = this.granularitySelector.month;
+        this.initTimeListFun();
       }
       if (this.value === "按年份" || this.value === "按季度") {
         this.dateSelector.timeType = "year";
@@ -326,15 +338,18 @@ export default {
         } else {
           this.itemList = this.granularitySelector.quarter;
         }
+        this.initTimeListFun();
       }
       if (this.value === "自定义") {
         this.dateSelector.timeType = "date";
         this.dateSelector.timePlaceholder = "选择日期";
         this.dateSelector.timeFormat = "yyyy 年 MM 月 dd 日";
         this.dateSelector.timeVFormat = "yyyy-MM-dd";
+        this.initTimeListFun();
       }
     },
     detectTime() {
+      console.log("执行detectTime函数")
       if (this.value === "按季度") {
         return;
       } else {
@@ -403,10 +418,11 @@ export default {
       getSpotComparedGraphChart(params).then(res => {
         console.log("执行后台请求函数，返回res.data.dataset");
         var tempDataset = res.data;
-        if (tempDataset.seriesData.length === 1) {
+        // 添加标签data的变化
+        if (tempDataset.seriesData.length === 1 && this.tags.length !== 1) {
           this.data.seriesData.push(tempDataset.seriesData[0]);
           this.data.legendData.push(tempDataset.legendData[0]);
-        } else {
+        } else{
           this.data.seriesData = tempDataset.seriesData;
           this.data.legendData = tempDataset.legendData;
         }

@@ -22,6 +22,7 @@
           :placeholder="dateSelector.timePlaceholder"
           :format="dateSelector.timeFormat"
           :value-format="dateSelector.timeVFormat"
+          :editable="dateSelector.editable"
           :picker-options="dateOption"
         ></el-date-picker>
         <el-select
@@ -47,6 +48,7 @@
           :placeholder="dateSelector.timePlaceholder"
           :format="dateSelector.timeFormat"
           :value-format="dateSelector.timeVFormat"
+          :editable="dateSelector.editable"
           :picker-options="dateOption"
           @change="detectTime"
         ></el-date-picker>
@@ -127,13 +129,15 @@ export default {
           self.initGranularity();
           self.tags = [];
           self.initTags = [];
-          if (newVal !== "千岛湖") {
-            self.initTags.push("千岛湖", newVal);
-            self.tags.push("千岛湖", newVal);
-          } else {
-            self.initTags.push("千岛湖");
-            self.tags.push("千岛湖");
-          }
+          self.initTags.push(newVal);
+          self.tags.push(newVal)
+          // if (newVal !== "中心湖") {
+          //   self.initTags.push("中心湖", newVal);
+          //   self.tags.push("中心湖", newVal);
+          // } else {
+          //   self.initTags.push("中心湖");
+          //   self.tags.push("中心湖");
+          // }
           self.initTimeParams();
         });
       }
@@ -148,11 +152,7 @@ export default {
           for (var i = 0; i < tags.length; i++) {
             tagsArray.push(tags[i].id);
           }
-          self.tags = tagsArray; // 所有当前景区的标签
-          // if (newAddtag === "") {
-          //   self.initTags = tagsArray;
-          //   self.initTimeParams();
-          // }
+          self.tags = tagsArray; // 所有当前景点的标签
           if (newAddtag !== "") {
             self.obtainData(self.comparedParams, self.scoreOrNum, newAddtag);
           }
@@ -212,7 +212,7 @@ export default {
       //初始化的标签数组
       initTags: [],
       // 向图表传入的数据集
-      dataset: [],
+      data: {},
       // 时间选择范围
       timeSelect: ["按年份", "按季度", "按月份", "自定义"],
 
@@ -246,7 +246,8 @@ export default {
         timeType: "",
         timePlaceholder: "",
         timeFormat: "",
-        timeVFormat: ""
+        timeVFormat: "",
+        editable:false
       },
       // 开始时间 结束时间
       timeList: {
@@ -304,6 +305,16 @@ export default {
         this.timeList.granularity = "周";
       }
     },
+        // 初始化时间参数
+    initTimeListFun(){
+      this.timeList = {
+        startDay: "",
+        endDay: "",
+        quarter1: "",
+        quarter2: "",
+        granularity: ""
+      }
+    },
     changeTimeRange() {
       // console.log("执行时间范围参数改变函数changeTimeRange");
       this.comparedParams.timeType = this.value;
@@ -314,6 +325,7 @@ export default {
         this.dateSelector.timeVFormat = "yyyy-MM";
         //颗粒度选择
         this.itemList = this.granularitySelector.month;
+        this.initTimeListFun();
       }
       if (this.value === "按年份" || this.value === "按季度") {
         this.dateSelector.timeType = "year";
@@ -326,12 +338,14 @@ export default {
         } else {
           this.itemList = this.granularitySelector.quarter;
         }
+        this.initTimeListFun();
       }
       if (this.value === "自定义") {
         this.dateSelector.timeType = "date";
         this.dateSelector.timePlaceholder = "选择日期";
         this.dateSelector.timeFormat = "yyyy 年 MM 月 dd 日";
         this.dateSelector.timeVFormat = "yyyy-MM-dd";
+        this.initTimeListFun();
       }
     },
     detectTime() {
@@ -403,7 +417,9 @@ export default {
       getSpotComparedGraphChart(params).then(res => {
         console.log("执行后台请求函数，返回res.data.dataset");
         var tempDataset = res.data;
-        if (tempDataset.seriesData.length === 1) {
+        console.log("--------------tempDataset---------------")
+        console.log(tempDataset)
+        if (tempDataset.seriesData.length === 1 && this.tags.length !== 1) {
           this.data.seriesData.push(tempDataset.seriesData[0]);
           this.data.legendData.push(tempDataset.legendData[0]);
         } else {

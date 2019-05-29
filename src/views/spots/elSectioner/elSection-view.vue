@@ -118,10 +118,10 @@ export default {
   },
   methods: {
     scoreDataset(dataset) {
-      // console.log("执行scoreDataset");
+      console.log("执行scoreDataset");
       this.isScoreDataset = [];
       this.isScoreDataset.push(dataset)
-      // console.log(this.isScoreDataset);
+      console.log(this.isScoreDataset);
     },
     numDataset(dataset) {
       this.isNumDataset = [];
