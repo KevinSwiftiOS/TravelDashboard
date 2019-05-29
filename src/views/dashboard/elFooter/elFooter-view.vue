@@ -18,7 +18,7 @@
         </el-col>
         <el-col :lg="14" :xl="14" class="elTitle threeTip">景点 排行榜</el-col>
         <el-col :lg="8" :xl="8" class="elFontSize">
-          <a href="#/hotel" target="_blank">查看详情</a>
+          <a href="#/sightspots" target="_blank">查看详情</a>
         </el-col>
       </el-row>
       <!--内容-->
