@@ -441,7 +441,6 @@ export default {
       if (this.detectTimeSeq()) {
         // 所有当前景区的更新
         this.obtainData(this.comparedParams, this.scoreOrNum, this.tags);
-        // this.$emit('timeParmasM', this.comparedParams);
       } else {
         this.$message.warning("error!!请正确选择时间范围");
       }

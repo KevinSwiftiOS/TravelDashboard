@@ -118,10 +118,8 @@ export default {
   },
   methods: {
     scoreDataset(dataset) {
-      console.log("执行scoreDataset");
       this.isScoreDataset = [];
       this.isScoreDataset.push(dataset)
-      console.log(this.isScoreDataset);
     },
     numDataset(dataset) {
       this.isNumDataset = [];
@@ -134,11 +132,9 @@ export default {
       this.newNumberTag = newTagObj;
     },
     removeScoreTag(removeTagObj) {
-      // console.log("removeScoreTag");
       this.reScoreTag = removeTagObj;
     },
     removeNumberTag(removeTagObj) {
-      // console.log("执行removeNumberTag函数");
       this.reNumberTag = removeTagObj;
     },
   }

@@ -135,7 +135,6 @@ export default {
       this.reScoreTag = removeTagObj;
     },
     removeNumberTag(removeTagObj) {
-      // console.log("执行removeNumberTag函数");
       this.reNumberTag = removeTagObj;
     }
   }

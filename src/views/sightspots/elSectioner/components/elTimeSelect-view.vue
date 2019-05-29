@@ -131,13 +131,6 @@ export default {
           self.initTags = [];
           self.initTags.push(newVal);
           self.tags.push(newVal)
-          // if (newVal !== "中心湖") {
-          //   self.initTags.push("中心湖", newVal);
-          //   self.tags.push("中心湖", newVal);
-          // } else {
-          //   self.initTags.push("中心湖");
-          //   self.tags.push("中心湖");
-          // }
           self.initTimeParams();
         });
       }
@@ -417,8 +410,6 @@ export default {
       getSpotComparedGraphChart(params).then(res => {
         console.log("执行后台请求函数，返回res.data.dataset");
         var tempDataset = res.data;
-        console.log("--------------tempDataset---------------")
-        console.log(tempDataset)
         if (tempDataset.seriesData.length === 1 && this.tags.length !== 1) {
           this.data.seriesData.push(tempDataset.seriesData[0]);
           this.data.legendData.push(tempDataset.legendData[0]);
@@ -441,7 +432,6 @@ export default {
       if (this.detectTimeSeq()) {
         // 所有当前景区的更新
         this.obtainData(this.comparedParams, this.scoreOrNum, this.tags);
-        // this.$emit('timeParmasM', this.comparedParams);
       } else {
         this.$message.warning("error!!请正确选择时间范围");
       }

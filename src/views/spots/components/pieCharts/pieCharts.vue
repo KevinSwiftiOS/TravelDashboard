@@ -88,33 +88,11 @@ export default {
       this.option.series = [];
       this.option.legend.data = [];
       this.option.xAxis.data = [];
-      // var array = this.data.seriesData;
-      // for (var i = 0; i < array.length; i++) {
-      //   array[i].itemStyle = {
-      //     normal: {
-      //       color: "rgba(62,139,222,1)" //线颜色
-      //     }
-      //   };
-      //   array[i].areaStyle = {
-      //     normal: {
-      //       color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
-      //         {
-      //           //折线图颜色渐变
-      //           offset: 0,
-      //           color: "rgba(62,139,222,0.6)"
-      //         },
-      //         {
-      //           offset: 1,
-      //           color: "rgba(62,139,222,0.01)"
-      //         }
-      //       ])
-      //     }
-      //   };
-      // }
+
       this.option.xAxis.data = this.data.xAxis;
       this.option.legend.data = this.data.legendData;
       this.option.series = this.data.seriesData;
-      // this.option.series = array;
+  
 
       this.chart = echarts.init(document.getElementById(this.id));
       this.chart.setOption(this.option, true);
