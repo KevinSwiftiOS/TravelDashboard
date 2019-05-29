@@ -127,10 +127,9 @@ export default {
         setTimeout(function() {
           self.isScoreOrNumber();
           self.initGranularity();
-          self.tags = [];
-          self.initTags = [];
+          self.initTagsFun();
           self.initTags.push(newVal);
-          self.tags.push(newVal)
+          self.tags.push(newVal);
           self.initTimeParams();
         });
       }
@@ -240,7 +239,7 @@ export default {
         timePlaceholder: "",
         timeFormat: "",
         timeVFormat: "",
-        editable:false
+        editable: false
       },
       // 开始时间 结束时间
       timeList: {
@@ -273,9 +272,19 @@ export default {
         this.scoreOrNum = "num";
       }
     },
+    //初始化标签
+    initTagsFun() {
+      this.initTags = [];
+      this.tags = [];
+      this.data = {
+        seriesData: [],
+        legendData: [],
+        xAxis: []
+      };
+    },
     //初始化时间参数
     initTimeParams() {
-      // console.log("执行initTimeParams函数");
+      console.log("执行initTimeParams函数");
       // 取到最近三个月的数据作为初始化数据
       var endTime = funcs.getDay(new Date(), 3);
       var year = endTime.substr(0, 5);
@@ -298,15 +307,15 @@ export default {
         this.timeList.granularity = "周";
       }
     },
-        // 初始化时间参数
-    initTimeListFun(){
+    // 初始化时间参数
+    initTimeListFun() {
       this.timeList = {
         startDay: "",
         endDay: "",
         quarter1: "",
         quarter2: "",
         granularity: ""
-      }
+      };
     },
     changeTimeRange() {
       // console.log("执行时间范围参数改变函数changeTimeRange");

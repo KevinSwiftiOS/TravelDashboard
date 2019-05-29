@@ -66,17 +66,12 @@ export default {
         var self = this;
         self.tags = [];
         setTimeout(function() {
-          var obj1 = { id: "中心湖", value: "中心湖", type: "success" };
-          if (newVal !== "中心湖") {
-            var obj2 = {
-              id: newVal,
-              value: newVal,
-              type: "success"
-            };
-            self.tags.push(obj1, obj2);
-          } else {
-            self.tags.push(obj1);
-          }
+          var obj = {
+            id: newVal,
+            value: newVal,
+            type: "success"
+          };
+          self.tags.push(obj);
           self.currspot = newVal;
           self.initArray();
         });
@@ -96,30 +91,37 @@ export default {
         this.scoreOrNumber = "num";
       }
     },
-        // 深拷贝数组
-    arrayCopy(source){
+    // 深拷贝数组
+    arrayCopy(source) {
       var sourceCopy = source instanceof Array ? [] : {};
-      for(var item in source){
-        sourceCopy[item] = typeof source[item] === 'object' ? this.arrayCopy(source[item]) : source[item];
+      for (var item in source) {
+        sourceCopy[item] =
+          typeof source[item] === "object"
+            ? this.arrayCopy(source[item])
+            : source[item];
       }
       return sourceCopy;
     },
     // 初始化选中标签
     initArray() {
       this.removeTags = [];
-      var tempArray =this.arrayCopy(spotsList);
-      if(this.currSpot === "中心湖"){
-        for(var i =0; i<tempArray.length; i++){
+      var tempArray = this.arrayCopy(spotsList);
+      if (this.currSpot === "中心湖") {
+        for (var i = 0; i < tempArray.length; i++) {
           if (tempArray[i].id !== "中心湖") {
             this.removeTags.push(tempArray[i]);
           }
         }
-      }else{
-        for(var i =0; i<tempArray.length; i++){
-          if (tempArray[i].id !== "中心湖" && tempArray[i].id !== this.currspot) {
+      } else {
+        for (var i = 0; i < tempArray.length; i++) {
+          if (
+            tempArray[i].id !== "中心湖" &&
+            tempArray[i].id !== this.currspot
+          ) {
             this.removeTags.push(tempArray[i]);
+          }
         }
-      }}
+      }
       //向父组件传递新增景区和当前选择的所有景区
       this.sendTagsArray();
     },

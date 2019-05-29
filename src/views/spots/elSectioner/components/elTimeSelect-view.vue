@@ -127,8 +127,7 @@ export default {
         setTimeout(function() {
           self.isScoreOrNumber();
           self.initGranularity();
-          self.tags = [];
-          self.initTags = [];
+          self.initTagsFun();
           if (newVal !== "千岛湖") {
             self.initTags.push("千岛湖", newVal);
             self.tags.push("千岛湖", newVal);
@@ -247,7 +246,7 @@ export default {
         timePlaceholder: "",
         timeFormat: "",
         timeVFormat: "",
-        editable:false
+        editable: false
       },
       // 开始时间 结束时间
       timeList: {
@@ -280,6 +279,16 @@ export default {
         this.scoreOrNum = "num";
       }
     },
+    //初始化标签
+    initTagsFun() {
+      this.initTags = [];
+      this.tags = [];
+      this.data = {
+        seriesData: [],
+        legendData: [],
+        xAxis: []
+      };
+    },
     //初始化时间参数
     initTimeParams() {
       // console.log("执行initTimeParams函数");
@@ -306,14 +315,14 @@ export default {
       }
     },
     // 初始化时间参数
-    initTimeListFun(){
+    initTimeListFun() {
       this.timeList = {
         startDay: "",
         endDay: "",
         quarter1: "",
         quarter2: "",
         granularity: ""
-      }
+      };
     },
     changeTimeRange() {
       console.log("执行时间范围参数改变函数changeTimeRange");
@@ -349,7 +358,7 @@ export default {
       }
     },
     detectTime() {
-      console.log("执行detectTime函数")
+      console.log("执行detectTime函数");
       if (this.value === "按季度") {
         return;
       } else {
@@ -422,7 +431,7 @@ export default {
         if (tempDataset.seriesData.length === 1 && this.tags.length !== 1) {
           this.data.seriesData.push(tempDataset.seriesData[0]);
           this.data.legendData.push(tempDataset.legendData[0]);
-        } else{
+        } else {
           this.data.seriesData = tempDataset.seriesData;
           this.data.legendData = tempDataset.legendData;
         }
