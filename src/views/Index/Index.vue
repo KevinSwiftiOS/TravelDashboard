@@ -8,7 +8,7 @@
           <i class="el-icon-zoom-in"></i> 首页
         </router-link>
         <router-link to="/restaurant">
-          <i class="icon-data_usage"></i> 餐饮详情
+          <i class="el-icon-new"></i> 餐饮详情
         </router-link>
         <router-link to="/hotel">
           <i class="el-icon-news">酒店详情</i>
