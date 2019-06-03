@@ -85,7 +85,7 @@ export default {
     //设置图表数据
     loadChart() {
       getSpotBarchartsNumber({
-          currSpot:"千岛湖"
+          currSpot:"中心湖"
       }).then(res => {
         this.option.xAxis[0].data = res.data.timeList;
         this.initChart();

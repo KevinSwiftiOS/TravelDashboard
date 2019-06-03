@@ -5,8 +5,7 @@ export const idData = {
 let imgone = new Image();
 imgone.src = "https://cdn.hzsxkj.cn/huayun/images/grid-no-border.png"
 export const optionData = {
-    // color: ['#8484FF', '#FFDB5C', '#2FC968'],
-    color: ['#B0C14E', '#6A6CCF'],
+color: ['#B0C14E', '#6A6CCF'],
     tooltip: {
         trigger: 'axis',
         axisPointer: { // 坐标轴指示器，坐标轴触发有效
@@ -19,7 +18,7 @@ export const optionData = {
     grid: {
         left: 0,
         top: '15%',
-        right: 0,
+        right: 7,
         bottom: '5%',
         containLabel: true,
         show: true,
@@ -155,6 +154,5 @@ export const optionData = {
         //     type: "line",
         //     data: []
         // },
-
     ]
 }

@@ -8,7 +8,8 @@
 <script>
 import echarts from "echarts";
 import { debounce } from "@/utils";
-import { optionData1 } from "./util";
+import { optionData } from "./util";
+import { setTimeout } from "timers";
 
 export default {
   props: {
@@ -28,21 +29,31 @@ export default {
       type: String,
       default: "23vh"
     },
-    spotsScoreData: {
-      type: Array,
-      default: () => []
+    list: {
+      type: Array
+      // default: () => []
+      // required: true
     }
   },
   data() {
     return {
-      option: optionData1,
-      chart: null
+      option: optionData,
+      chart: null,
+      xh_Height: 0,
+      data: {}
     };
   },
+  computed: {
+    dataset: function() {
+      return this.list;
+    }
+  },
   watch: {
-    spotsScoreData: {
+    dataset: {
       handler: function(newVal) {
-        this.option.series[0].data = newVal;
+        //  console.log('我改变了');
+        let self = this;
+        self.data = newVal[0];
         this.initChart();
       },
       deep: true
@@ -59,7 +70,7 @@ export default {
     }
   },
   mounted() {
-    this.initChart();
+    // this.initChart();
     this.resize();
   },
   beforeDestroy() {
@@ -73,6 +84,16 @@ export default {
 
   methods: {
     initChart() {
+      console.log("执行initChart函数");
+      this.option.series = [];
+      this.option.legend.data = [];
+      this.option.xAxis.data = [];
+
+      this.option.xAxis.data = this.data.xAxis;
+      this.option.legend.data = this.data.legendData;
+      this.option.series = this.data.seriesData;
+  
+
       this.chart = echarts.init(document.getElementById(this.id));
       this.chart.setOption(this.option, true);
     },

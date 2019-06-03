@@ -20,7 +20,7 @@
       <hr style="border: 1px solid rgba(236, 237, 240, 1);">
       <el-row :gutter="24">
         <el-col :lg="18">
-          <pie-charts :id="'scoreCharts'" :list="isScoreDataset"></pie-charts>
+          <line-charts :id="'scoreCharts'" :list="isScoreDataset"></line-charts>
         </el-col>
         <el-tags-view
           :id="'scoreTags'"
@@ -51,7 +51,7 @@
       <hr style="border: 1px solid rgba(236, 237, 240, 1);">
       <el-row :gutter="24">
         <el-col :lg="18">
-          <pie-charts :id="'numberCharts'" :list="isNumDataset"></pie-charts>
+          <line-charts :id="'numberCharts'" :list="isNumDataset"></line-charts>
         </el-col>
         <el-tag-select-view
           :id="'numberTags'"
@@ -70,7 +70,7 @@
   </div>
 </template>
 <script>
-import PieCharts from "../components/pieCharts/pieCharts";
+import LineCharts from "../components/lineCharts/LineCharts";
 import elTimeSelectView from "./components/elTimeSelect-view";
 import elTagsView from "./components/elTags-view";
 import elTagSelectView from "./components/elTagSelect-view";
@@ -86,7 +86,7 @@ export default {
     }
   },
   components: {
-    PieCharts,
+    LineCharts,
     elTimeSelectView,
     elTagsView,
     elTagSelectView

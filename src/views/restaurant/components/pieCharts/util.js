@@ -52,7 +52,9 @@ export const optionData = {
 
 }
 export const optionData1 = {
-    color: ['#F8DE4A', '#B7D962', '#7072D1', '#7492E7', '#F5D001'],
+       color: ['#8484FF', '#FFDB5C', '#7492E7',
+           '#B0C14E', '#fc9c0d'
+       ],
     title : {
         text: '餐饮评分分布',
 

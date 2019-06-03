@@ -136,7 +136,7 @@ export default {
     handleSizeChange(val) {
       this.page.pageSize = val;
       this.page.currPage = 1;
-      console.log(`每页 ${val} 条`);
+      // console.log(`每页 ${val} 条`);
       this.loadCommentList(
         this.featureWord,
         this.page.currPage,
@@ -153,7 +153,7 @@ export default {
         this.page.pageSize,
         this.currSpot
       );
-      console.log(`当前页: ${val}`);
+      // console.log(`当前页: ${val}`);
     },
 
     // 特征句子高亮显示

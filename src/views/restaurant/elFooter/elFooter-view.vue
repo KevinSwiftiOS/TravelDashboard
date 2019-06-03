@@ -105,10 +105,7 @@ export default {
     initTabsList: function() {
       console.log("执行initTabsList");
       getShopLabelList().then(res => {
-        console.log(111111111111);
         this.infoList = res.data["infoList"];
-        console.log("this.infoList");
-        console.log(this.infoList);
         var resultNum = [];
         for (var i = 0; i < this.infoList.length; i++) {
           if (this.infoList[i].name === "口味") {
@@ -231,7 +228,7 @@ export default {
     handleSizeChange(val) {
       this.pageSize = val;
       this.currPage = 1;
-      console.log(`每页 ${val} 条`);
+      // console.log(`每页 ${val} 条`);
       this.loadCommentList(
         this.featureWord,
         this.currPage,
@@ -248,7 +245,7 @@ export default {
         this.pageSize,
         this.commentClass
       );
-      console.log(`当前页: ${val}`);
+      // console.log(`当前页: ${val}`);
     },
 
     // 特征句子高亮显示

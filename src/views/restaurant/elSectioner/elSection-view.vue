@@ -1,7 +1,10 @@
 <template>
   <div>
     <div style="margin-bottom: 10px; margin-top:100px;">
-      <img src="../../../assets/DetailsImgs/listIcon.png" style="width: 15px;height: 15px; margin-right:5px;">
+      <img
+        src="../../../assets/DetailsImgs/listIcon.png"
+        style="width: 15px;height: 15px; margin-right:5px;"
+      >
       <span class="chartTitle">餐饮列表</span>
     </div>
     <div class="select-style">
@@ -43,7 +46,12 @@
             <i class="el-icon-d-arrow-right"></i>
           </el-col>
           <el-col :lg="5">
-            <el-button type="text" class="fontStyle small-font" :autofocus="autoFocus()" @click="sortList(1,-1)">
+            <el-button
+              type="text"
+              class="fontStyle small-font"
+              :autofocus="autoFocus()"
+              @click="sortList(1,-1)"
+            >
               评分从高到低
               <i class="el-icon-download el-icon--right"></i>
             </el-button>
@@ -193,7 +201,7 @@ export default {
       this.selectBusines = value;
       //商圈改变后，触发菜系的变化
       this.initCuisine();
-       this.autoFocus();
+      this.autoFocus();
     },
     initCuisine() {
       var params = this.selectBusines.replace(/\([^\)]*\)/g, "");
@@ -234,7 +242,6 @@ export default {
         this.shopList = res.data.restaurantShopList;
 
         this.page = res.page;
-        console.log(this.page);
       });
     },
     //排序方式
@@ -282,8 +289,8 @@ export default {
         this.commentList = this.allComments.goodList;
       });
     },
-        autoFocus(){
-      console.log("执行autoFocus函数")
+    autoFocus() {
+      console.log("执行autoFocus函数");
       return true;
     }
   }

@@ -146,7 +146,6 @@ export default {
       getShopKeyData().then(res => {
         if (res.code === 0) {
           this.commentKeyIndicatorModel = res.data.commentKeyIndicatorModel;
-          console.log(this.commentKeyIndicatorModel);
         } else {
           this.$Message.error(res.message);
         }

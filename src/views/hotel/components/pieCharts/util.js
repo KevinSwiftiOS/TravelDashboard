@@ -23,7 +23,15 @@ export const optionData = {
         orient: 'vertical',
         // formatter:'{{d}%}\n{b}',
         x: 'right',
-        data: [{name:'少'}, {name:'较少'}, {name:'一般'},{ name:'多'}],
+        data: [{
+            name: '少'
+        }, {
+            name: '较少'
+        }, {
+            name: '一般'
+        }, {
+            name: '多'
+        }],
         y: "center"
     },
     series: [{
@@ -55,7 +63,9 @@ export const optionData = {
 
 }
 export const optionData1 = {
-    color: ['#7492E7', '#F8DE4A', '#7072D1', '#B7D962', '#F5D001'],
+    color: ['#8484FF', '#FFDB5C', '#7492E7',
+        '#B0C14E', '#fc9c0d'
+    ],
     title: {
         text: '酒店评分分布',
         textStyle: {
