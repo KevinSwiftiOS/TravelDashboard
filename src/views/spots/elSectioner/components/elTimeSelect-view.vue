@@ -132,8 +132,8 @@ export default {
             self.initTags.push("千岛湖", newVal);
             self.tags.push("千岛湖", newVal);
           } else {
-            self.initTags.push("千岛湖");
-            self.tags.push("千岛湖");
+            self.initTags.push("千岛湖","西湖");
+            self.tags.push("千岛湖","西湖");
           }
           self.initTimeParams();
         });
