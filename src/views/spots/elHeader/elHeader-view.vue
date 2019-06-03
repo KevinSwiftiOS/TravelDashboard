@@ -21,7 +21,7 @@
         <br>
         <br>
         <br>
-        <el-select v-model="value" @change="changeCurrSpotFun" placeholder="请选择">
+        <el-select v-model="value" @change="changeCurrSpotFun" placeholder="请选择景区">
           <el-option
             v-for="item in spotsList"
             :key="item.value"
@@ -139,7 +139,7 @@ export default {
       },
       
       value: "",
-      currSpot: "西湖",
+      currSpot: "千岛湖",
       endDate: "",
 
       //图表id

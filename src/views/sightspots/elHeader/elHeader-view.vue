@@ -21,7 +21,7 @@
         <br>
         <br>
         <br>
-        <el-select v-model="value" @change="changeCurrSpotFun" placeholder="请选择">
+        <el-select v-model="value" @change="changeCurrSpotFun" placeholder="请选择景点">
           <el-option
             v-for="item in spotsList"
             :key="item.value"
