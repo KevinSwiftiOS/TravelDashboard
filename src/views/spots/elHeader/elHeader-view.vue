@@ -104,7 +104,7 @@ import {
 import { spotsList } from "../base/spotInf.js";
 import { getEndDate } from "@/api/dataView";
 import scatterCharts from "../components/scatterCharts";
-import PieCharts from "../components/pieCharts/pieCharts";
+import PieCharts from "../components/pieCharts/PieCharts";
 import BarCharts from "../components/barCharts/BarCharts";
 import { IdData } from "../components/pieCharts/util";
 import Bus from "../bus.js"
