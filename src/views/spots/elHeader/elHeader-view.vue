@@ -104,7 +104,7 @@ import {
 import { spotsList } from "../base/spotInf.js";
 import { getEndDate } from "@/api/dataView";
 import scatterCharts from "../components/scatterCharts";
-import PieCharts from "../components/pieCharts/PieCharts";
+import PieCharts from "../components/pieCharts/pieCharts";
 import BarCharts from "../components/barCharts/BarCharts";
 import { IdData } from "../components/pieCharts/util";
 import Bus from "../bus.js"
@@ -136,7 +136,7 @@ export default {
         numVariation: 0,
         scoreVariation: 0
       },
-      
+
       value: "",
       currSpot: "千岛湖",
       endDate: "",
@@ -221,7 +221,7 @@ export default {
       this.setKeyIndicatorFun(this.currSpot);
       this.setKeyVariationFun(this.currSpot);
       this.SetOptionSpotsData(this.currSpot);
-      
+
       Bus.$emit('currSpot', this.currSpot); //向其他组件传递currSpot
     }
   },
