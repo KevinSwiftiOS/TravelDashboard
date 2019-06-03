@@ -73,7 +73,7 @@
     <el-row :gutter="24">
       <el-col :lg="16">
         <p class="chartTitle">景点评分 / 评论数分布图</p>
-        <div class="chartBoard">
+        <div class="chartBoard" style="height:252px">
           <el-row :gutter="24">
             <el-col :lg="8">
               <pie-charts :id="SpotsScoreId" :spotsScoreData="spotsScoreData"></pie-charts>
@@ -104,7 +104,7 @@ import {
 import { spotsList } from "../base/spotInf.js";
 import { getEndDate } from "@/api/dataView";
 import scatterCharts from "../components/scatterCharts";
-import PieCharts from "../components/pieCharts/pieCharts";
+import PieCharts from "../components/pieCharts/PieCharts";
 import BarCharts from "../components/barCharts/BarCharts";
 import { IdData } from "../components/pieCharts/util";
 import Bus from "../bus.js"

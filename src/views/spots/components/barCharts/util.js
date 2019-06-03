@@ -20,7 +20,7 @@ export const optionData = {
     },
     grid: {
         left: 0,
-        top: '15%',
+        top: '25%',
         right: 7,
         bottom: '5%',
         containLabel: true,
@@ -35,7 +35,7 @@ export const optionData = {
         show: true,
         orient: 'horizontal',
         // bottom: "190",
-        top:"5",
+        top:"15",
         textStyle: {
             color: 'black',
             fontSize: 12,
