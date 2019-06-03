@@ -84,8 +84,6 @@ export default {
       getCommentNumber({
         currSpot:this.currSpot
       }).then(res => {
-        console.log("res.data.goodNumber")
-        console.log(res.data.goodNumber)
         this.totalNumber.goodNumber = res.data.goodNumber[0].commentNumber;
         this.totalNumber.badNumber = res.data.badNumber[0].commentNumber;
 
