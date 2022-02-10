@@ -45,7 +45,7 @@
     "eslint-plugin-vue": "^5.2.2",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
-    "node-sass": "^4.9.0",
+    "node-sass": "^7.0.0",
     "sass-loader": "^7.0.1",
     "svgo": "^1.2.0",
     "vue-loader": "^15.7.0",
